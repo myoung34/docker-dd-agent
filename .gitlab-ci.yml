@@ -1,0 +1,10 @@
+before_script:
+  - apk add -U --no-cache make docker git
+
+build:
+  script:
+    - git clone https://github.com/myoung34/docker-dd-agent.git
+    - cd docker-dd-agent
+    - echo ${HUB_REGISTRY_PASSWORD} | docker login -u ${HUB_REGISTRY_USER} --password-stdin
+    - docker build -t myoung34/datadog-arm:latest -f Dockerfile-alpine .
+    - docker push myoung34/datadog-arm:latest
